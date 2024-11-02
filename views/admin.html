@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Perguntas</title>
+    <link rel="stylesheet" href="../public/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Administração</h1>
+        <form id="formCadastrar">
+            <label for="texto">Cadastrar nova pergunta:</label><br>
+            <input type="text" id="texto" name="texto" required size="75px"><br><br>
+            <button type="submit">Cadastrar Pergunta</button>
+        </form><br>
+        <form id="formRemover">
+            <label for="id">Selecione a pergunta para remover:</label><br>
+            <select id="perguntaSelect" name="id" required>
+                <option value="" disabled selected>Selecione uma pergunta</option>
+            </select><br><br>
+            <button type="submit">Remover Pergunta</button>
+        </form>
+    </div>
+    <div id="mensagemErro" style="color: red; text-align: center; margin-top: 10px;"></div>
+    <script src="../public/scripts.js"></script>
+</body>
+</html>

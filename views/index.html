@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Serviços - HRAV</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Avaliação de Serviços - HRAV</h1>
+        <form id="avaliacao-form" method="POST">
+            <div id="perguntasContainer"></div>
+            <div class="anonimato">
+                <p>Sua avaliação é anônima, nenhuma informação pessoal é solicitada ou armazenada.</p>
+            </div>
+            <button type="submit">Enviar Avaliação</button>
+        </form>
+    </div>
+    <script src="../public/scripts.js"></script>
+    <script>
+        const form = document.getElementById('avaliacao-form');
+        const perguntasContainer = document.getElementById('perguntasContainer');
+
+        fetch('carregarperguntas.php')
+            .then(response => response.json())
+            .then(data => {
+                let perguntasHTML = '';
+                let contador = 1;
+
+                data.forEach(pergunta => {
+                    perguntasHTML += `
+                        <div>
+                            <p>${contador++} - ${pergunta.pergunta}</p>
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="1"> 1
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="2"> 2
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="3"> 3
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="4"> 4
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="5"> 5
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="6"> 6
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="7"> 7
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="8"> 8
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="9"> 9
+                            <input type="radio" name="avaliacao[${pergunta.id}]" value="10"> 10
+                        </div>
+                    `;
+                });
+
+                perguntasContainer.innerHTML = perguntasHTML;
+            })
+            .catch(error => console.error('Erro ao carregar as perguntas:', error));
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            fetch('salvarperguntas.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                form.reset(); // Limpa o formulário após envio
+            })
+            .catch(error => console.error('Erro ao enviar avaliação:', error));
+        });
+
+        // Redirecionar após 30 segundos
+        setTimeout(() => {
+            window.location.href = 'index.html'; // Redireciona para a página inicial
+        }, 30000);
+    </script>
+</body>
+</html>
